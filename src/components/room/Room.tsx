@@ -7,7 +7,6 @@ import { hotspots } from "@/constnts";
 import Hotspot from "@/components/global/Hotspot";
 
 export default function Room() {
-  const [isLoading, setIsLoading] = useState(true);
   const [isPanEnabled, setIsPanEnabled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -44,24 +43,6 @@ export default function Room() {
     return () => window.removeEventListener("resize", checkPanningState);
   }, [scaledWidth, x]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 z-[51] flex h-screen w-screen items-center justify-center bg-white duration-1000">
-        <h2 className="loader-title font-semibold">
-          Loading Pan and Zoom Image Viewer...
-        </h2>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-black">
       <section className="mx-auto">
@@ -89,6 +70,15 @@ export default function Room() {
                 timeConstant: 250,
               }}
               className={`relative h-full ${isPanEnabled ? "cursor-grab touch-none active:cursor-grabbing" : ""} md:w-full`}
+              initial={{
+                opacity: 0,
+              }}
+              transition={{
+                duration: 0.5,
+              }}
+              animate={{
+                opacity: 1,
+              }}
             >
               <div className="relative h-full">
                 <Image

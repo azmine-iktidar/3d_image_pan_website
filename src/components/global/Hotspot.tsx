@@ -183,7 +183,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
         <TooltipTrigger asChild>
           <motion.div
             className={cn(
-              "group z-20 block",
+              "group z-10 block",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
               className,
             )}
