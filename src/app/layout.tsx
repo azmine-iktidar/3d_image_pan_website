@@ -1,3 +1,5 @@
+import Footer from "@/components/global/Footer";
+import Header from "@/components/global/Header";
 import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
@@ -13,8 +15,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={`${GeistSans.variable}`}
+      suppressHydrationWarning
+    >
+      <body suppressHydrationWarning>
+        <div className="flex h-screen flex-col">
+          <Header />
+          <main className="flex-grow overflow-hidden">{children}</main>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }
