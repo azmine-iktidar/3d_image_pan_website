@@ -123,7 +123,10 @@ export const ImageHotspot2 = [
   },
 ];
 
-export const HEADER_LINKS = [
+export const HEADER_LINKS: {
+  label: string;
+  url: string;
+}[] = [
   {
     label: "Page 1",
     url: "/1",

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { HEADER_LINKS } from "@/constnts";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Header() {
   const [hovered, setHovered] = useState(false);
@@ -39,6 +40,7 @@ export default function Header() {
         className={cn(
           "absolute left-0 top-0 z-[9] h-screen w-screen bg-black bg-opacity-[0] bg-clip-padding backdrop-blur-3xl backdrop-filter",
           hovered ? "" : "pointer-events-none",
+          useIsMobile() ? "hidden" : "",
         )}
         initial={{ opacity: 0 }}
         animate={{ opacity: hovered ? 1 : 0 }}
