@@ -2,15 +2,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 import { useEffect, useState, useRef } from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { motion, useMotionValue } from "framer-motion";
-import imgSource from "@public/images/image1.png";
-import { hotspots } from "@/constnts";
-import Hotspot from "@/components/global/Hotspot";
+
+import { type HotspotType } from "@/constnts";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import Hotspot from "../global/Hotspot";
 
-export default function Room() {
+export default function Room({
+  hotspots,
+  imgSource,
+}: {
+  hotspots: HotspotType[];
+  imgSource: StaticImageData;
+}) {
   const [isPanEnabled, setIsPanEnabled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -22,7 +22,7 @@ interface HotspotProps {
   y: number;
   title: string;
   url: string;
-  type: "circle" | "arrow" | "object";
+
   className?: string;
 }
 
