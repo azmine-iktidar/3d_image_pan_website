@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
@@ -5,6 +7,8 @@ import { motion, useMotionValue } from "framer-motion";
 import imgSource from "@public/images/image1.png";
 import { hotspots } from "@/constnts";
 import Hotspot from "@/components/global/Hotspot";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Room() {
   const [isPanEnabled, setIsPanEnabled] = useState(false);
@@ -42,10 +46,10 @@ export default function Room() {
     window.addEventListener("resize", checkPanningState);
     return () => window.removeEventListener("resize", checkPanningState);
   }, [scaledWidth, x]);
-
+  const isMobile = useIsMobile();
   return (
-    <div className="bg-black">
-      <section className="mx-auto">
+    <div className="w-screen bg-black">
+      <section className="mx-auto w-screen">
         <div className="mx-auto h-screen">
           <div
             ref={containerRef}
@@ -54,7 +58,7 @@ export default function Room() {
           >
             <motion.div
               style={{
-                width: `${scaledWidth}px`,
+                width: cn(isMobile ? `${scaledWidth}px` : `${windowWidth}px`),
                 height: "100%",
                 x,
                 touchAction: isPanEnabled ? "none" : "auto",

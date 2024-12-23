@@ -3,8 +3,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LoadingScreen from "@/components/global/Loading-screen";
 import Room from "@/components/room/Room";
-import Image from "next/image";
-import randomImage from "@public/images/image1.png";
 export default function Homepage() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +20,6 @@ export default function Homepage() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Image src={randomImage} fill className="hidden" alt="" />
           <LoadingScreen
             onLoadingComplete={() => {
               setIsLoading(false);
