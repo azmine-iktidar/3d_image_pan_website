@@ -7,9 +7,11 @@ import imgSource from "@public/images/image2.png";
 import imgSource2 from "@public/images/image1.png";
 import { ImageHotspot1, ImageHotspot2 } from "@/constnts";
 import { useParams } from "next/navigation";
+import { useIsMobile } from "@/hooks/use-mobile";
+import RoomMobile from "@/components/room/RoomMobile";
 export default function Homepage() {
   const [isLoading, setIsLoading] = useState(true);
-
+  const isMobile = useIsMobile();
   const handleLoadingComplete = () => {
     setIsLoading(false);
   };
@@ -48,7 +50,11 @@ export default function Homepage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <Room hotspots={hotspotData} imgSource={imageSource} />
+          {isMobile ? (
+            <RoomMobile hotspots={hotspotData} imgSource={imageSource} />
+          ) : (
+            <Room hotspots={hotspotData} imgSource={imageSource} />
+          )}
         </motion.div>
       )}
     </AnimatePresence>
