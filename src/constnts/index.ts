@@ -122,3 +122,14 @@ export const ImageHotspot2 = [
     url: "#",
   },
 ];
+
+export const HEADER_LINKS = [
+  {
+    label: "Page 1",
+    url: "/1",
+  },
+  {
+    label: "Page 2",
+    url: "/2",
+  },
+];

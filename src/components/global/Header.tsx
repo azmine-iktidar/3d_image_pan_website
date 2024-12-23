@@ -3,20 +3,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { HEADER_LINKS } from "@/constnts";
 
 export default function Header() {
   const [hovered, setHovered] = useState(false);
-
-  const LINKS = [
-    {
-      label: "About",
-      url: "/about",
-    },
-    {
-      label: "Contact",
-      url: "/contact",
-    },
-  ];
 
   return (
     <>
@@ -30,7 +20,7 @@ export default function Header() {
               Logo
             </Link>
             <div className="flex items-center space-x-4">
-              {LINKS.map((link) => (
+              {HEADER_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.url}
