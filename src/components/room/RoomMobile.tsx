@@ -27,10 +27,9 @@ export default function RoomMobile({
   const x = useMotionValue(0);
   const isDragging = useRef(false);
 
-  useMotionValueEvent(x, "change", (latest) => {
+  useMotionValueEvent(x, "change", () => {
     if (isDragging.current) {
       setIsInteracting(true);
-      console.log(`Panning - X position: ${latest.toFixed(2)}`);
     }
   });
 
@@ -46,19 +45,16 @@ export default function RoomMobile({
 
     const handleTouchStart = () => {
       setIsInteracting(true);
-      console.log("Touch interaction started");
     };
 
     const handleTouchEnd = () => {
       if (!isDragging.current) {
         setIsInteracting(false);
-        console.log("Touch interaction ended");
       }
     };
 
     const handleScroll = () => {
       setIsInteracting(true);
-      console.log("Scrolling detected");
     };
 
     document.body.style.overflow = "hidden";
@@ -116,12 +112,10 @@ export default function RoomMobile({
                 timeConstant: 250,
               }}
               onDragStart={() => {
-                console.log("Drag interaction started");
                 isDragging.current = true;
                 setIsInteracting(true);
               }}
               onDragEnd={() => {
-                console.log("Drag interaction ended");
                 isDragging.current = false;
                 setIsInteracting(false);
               }}

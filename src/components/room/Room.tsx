@@ -38,7 +38,7 @@ export default function Room({
     window.addEventListener("resize", checkPanningState);
     return () => window.removeEventListener("resize", checkPanningState);
   }, [scaledWidth, x]);
-  console.log(x);
+
   const isMobile = useIsMobile();
   return (
     <div className="w-screen bg-black">
