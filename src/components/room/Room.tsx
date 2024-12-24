@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { motion, useMotionValue } from "framer-motion";
 
-import { type HotspotType } from "@/constnts";
+import { type HotspotType } from "@/constants";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Hotspot from "../global/Hotspot";

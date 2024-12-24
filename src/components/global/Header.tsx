@@ -3,7 +3,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { HEADER_LINKS } from "@/constnts";
+import { HEADER_LINKS } from "@/constants";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Header() {

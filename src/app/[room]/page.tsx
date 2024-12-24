@@ -5,7 +5,7 @@ import LoadingScreen from "@/components/global/Loading-screen";
 import Room from "@/components/room/Room";
 import imgSource from "@public/images/image2.png";
 import imgSource2 from "@public/images/image1.png";
-import { ImageHotspot1, ImageHotspot2 } from "@/constnts";
+import { ImageHotspot1, ImageHotspot2 } from "@/constants";
 import { useParams } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RoomMobile from "@/components/room/RoomMobile";
