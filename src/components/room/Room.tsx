@@ -19,39 +19,26 @@ export default function Room({
 }) {
   const [isPanEnabled, setIsPanEnabled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Get image dimensions
   const imageAspectRatio = imgSource.width / imgSource.height;
   const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
   const scaledWidth = viewportHeight * imageAspectRatio;
   const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-
-  // Calculate maximum drag distance based on image dimensions
   const maxDragDistance = Math.max(0, scaledWidth - windowWidth);
-
-  // Motion value for x position
   const x = useMotionValue(0);
-
   useEffect(() => {
-    // Check if panning should be enabled
     const checkPanningState = () => {
       const currentWindowWidth = window.innerWidth;
       const shouldPanBeEnabled = scaledWidth > currentWindowWidth;
       setIsPanEnabled(shouldPanBeEnabled);
-
-      // Reset position when panning is disabled
       if (!shouldPanBeEnabled) {
         x.set(0);
       }
     };
-
-    // Initial check
     checkPanningState();
-
-    // Add resize listener
     window.addEventListener("resize", checkPanningState);
     return () => window.removeEventListener("resize", checkPanningState);
   }, [scaledWidth, x]);
+  console.log(x);
   const isMobile = useIsMobile();
   return (
     <div className="w-screen bg-black">

@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Image, { type StaticImageData } from "next/image";
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 
 import { type HotspotType } from "@/constnts";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Hotspot from "../global/Hotspot";
+import { useInteraction } from "@/context";
 
 export default function RoomMobile({
   hotspots,
@@ -18,56 +17,75 @@ export default function RoomMobile({
   imgSource: StaticImageData;
 }) {
   const [isPanEnabled, setIsPanEnabled] = useState(false);
+  const { setIsInteracting } = useInteraction();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Get image dimensions
   const imageAspectRatio = imgSource.width / imgSource.height;
   const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
   const scaledWidth = viewportHeight * imageAspectRatio;
   const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-
-  // Calculate maximum drag distance based on image dimensions
   const maxDragDistance = Math.max(0, scaledWidth - windowWidth);
-
-  // Motion value for x position
   const x = useMotionValue(0);
+  const isDragging = useRef(false);
+
+  useMotionValueEvent(x, "change", (latest) => {
+    if (isDragging.current) {
+      setIsInteracting(true);
+      console.log(`Panning - X position: ${latest.toFixed(2)}`);
+    }
+  });
 
   useEffect(() => {
-    // Check if panning should be enabled
     const checkPanningState = () => {
       const currentWindowWidth = window.innerWidth;
       const shouldPanBeEnabled = scaledWidth > currentWindowWidth;
       setIsPanEnabled(shouldPanBeEnabled);
-
-      // Reset position when panning is disabled
       if (!shouldPanBeEnabled) {
         x.set(0);
       }
     };
 
-    // Prevent body scrolling when component mounts
+    const handleTouchStart = () => {
+      setIsInteracting(true);
+      console.log("Touch interaction started");
+    };
+
+    const handleTouchEnd = () => {
+      if (!isDragging.current) {
+        setIsInteracting(false);
+        console.log("Touch interaction ended");
+      }
+    };
+
+    const handleScroll = () => {
+      setIsInteracting(true);
+      console.log("Scrolling detected");
+    };
+
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     document.body.style.position = "fixed";
     document.body.style.width = "100%";
     document.body.style.height = "100%";
 
-    // Initial check
     checkPanningState();
 
-    // Add resize listener
     window.addEventListener("resize", checkPanningState);
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("touchstart", handleTouchStart);
+    document.addEventListener("touchend", handleTouchEnd);
 
     return () => {
-      // Cleanup: Remove event listener and restore scrolling
       window.removeEventListener("resize", checkPanningState);
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       document.body.style.position = "";
       document.body.style.width = "";
       document.body.style.height = "";
     };
-  }, [scaledWidth, x]);
+  }, [scaledWidth, x, setIsInteracting]);
 
   const isMobile = useIsMobile();
 
@@ -97,6 +115,16 @@ export default function RoomMobile({
                 power: 0.1,
                 timeConstant: 250,
               }}
+              onDragStart={() => {
+                console.log("Drag interaction started");
+                isDragging.current = true;
+                setIsInteracting(true);
+              }}
+              onDragEnd={() => {
+                console.log("Drag interaction ended");
+                isDragging.current = false;
+                setIsInteracting(false);
+              }}
               className={`relative h-full ${
                 isPanEnabled
                   ? "cursor-grab touch-none active:cursor-grabbing"
@@ -123,7 +151,6 @@ export default function RoomMobile({
                   quality={100}
                   draggable={false}
                 />
-
                 <div className="absolute inset-0">
                   {hotspots.map((hotspot) => (
                     <Hotspot key={hotspot.id} {...hotspot} />

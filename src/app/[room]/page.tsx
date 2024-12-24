@@ -9,6 +9,7 @@ import { ImageHotspot1, ImageHotspot2 } from "@/constnts";
 import { useParams } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RoomMobile from "@/components/room/RoomMobile";
+import { InteractionProvider } from "@/context";
 export default function Homepage() {
   const [isLoading, setIsLoading] = useState(true);
   const isMobile = useIsMobile();
@@ -51,7 +52,9 @@ export default function Homepage() {
           transition={{ duration: 1 }}
         >
           {isMobile ? (
-            <RoomMobile hotspots={hotspotData} imgSource={imageSource} />
+            <InteractionProvider>
+              <RoomMobile hotspots={hotspotData} imgSource={imageSource} />
+            </InteractionProvider>
           ) : (
             <Room hotspots={hotspotData} imgSource={imageSource} />
           )}

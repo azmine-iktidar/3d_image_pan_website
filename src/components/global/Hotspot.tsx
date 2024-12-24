@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { useInteraction } from "@/context";
 
 interface HotspotProps {
   id: string;
@@ -22,7 +23,6 @@ interface HotspotProps {
   y: number;
   title: string;
   url: string;
-
   className?: string;
 }
 
@@ -30,6 +30,15 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { isInteracting } = useInteraction();
+
+  // Force close tooltip/popover and hover state when interaction starts
+  useEffect(() => {
+    if (isInteracting) {
+      setIsOpen(false);
+      setIsHovered(false);
+    }
+  }, [isInteracting]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -49,6 +58,15 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
       timer = setTimeout(() => fn(...args), ms);
     };
   };
+
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!isInteracting) {
+        setIsOpen(open);
+      }
+    },
+    [isInteracting],
+  );
 
   const HotspotContent = () => (
     <Link href={url} className="block text-black">
@@ -73,7 +91,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
   const HotspotDot = () => (
     <motion.span
       className="relative block h-[11px] w-[11px]"
-      onHoverStart={() => setIsHovered(true)}
+      onHoverStart={() => !isInteracting && setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
       {/* Main dot */}
@@ -96,7 +114,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
 
       {/* Ping circles - only show when not hovered/open */}
       <AnimatePresence>
-        {!isHovered && !isOpen && (
+        {!isHovered && !isOpen && !isInteracting && (
           <>
             <motion.span
               className="absolute inset-0 block rounded-full bg-white/30"
@@ -124,7 +142,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
 
       {/* Active/Hover ring effect */}
       <AnimatePresence>
-        {(isHovered || isOpen) && (
+        {(isHovered || isOpen) && !isInteracting && (
           <motion.div
             className="absolute -inset-10"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -146,7 +164,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
   // Mobile Popover
   if (isMobile) {
     return (
-      <Popover onOpenChange={setIsOpen}>
+      <Popover open={isOpen && !isInteracting} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <motion.button
             className={cn(
@@ -179,7 +197,11 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
   // Desktop Tooltip
   return (
     <TooltipProvider>
-      <Tooltip delayDuration={100} onOpenChange={setIsOpen}>
+      <Tooltip
+        delayDuration={100}
+        open={isOpen && !isInteracting}
+        onOpenChange={handleOpenChange}
+      >
         <TooltipTrigger asChild>
           <motion.div
             className={cn(
