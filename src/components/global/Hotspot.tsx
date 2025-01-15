@@ -169,7 +169,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
           <motion.button
             className={cn(
               "group z-20 block",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+              "rounded-full p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
               className,
             )}
             style={{
