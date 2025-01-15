@@ -10,6 +10,7 @@ export function useWindowSize() {
     }
 
     window.addEventListener("resize", updateSize);
+    console.table([window.innerWidth, window.innerHeight]);
     updateSize(); // Initialize size on mount
 
     return () => window.removeEventListener("resize", updateSize);

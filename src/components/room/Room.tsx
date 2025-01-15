@@ -82,7 +82,7 @@ export default function Room({
                   src={imgSource}
                   alt=""
                   fill
-                  className="select-none overflow-y-clip object-cover"
+                  className="select-none overflow-y-clip object-cover object-top"
                   priority
                   sizes={`${scaledWidth}px`}
                   quality={100}
