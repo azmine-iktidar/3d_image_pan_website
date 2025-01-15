@@ -1,8 +1,28 @@
+// eslint-disable jsx-no-target-blank
+/* eslint-disable @next/next/no-img-element */
 // components/Footer.js
 export default function Footer() {
   return (
-    <footer className="absolute bottom-0 w-full border-t-2 bg-gray-800/10 bg-opacity-[0] bg-clip-padding p-4 text-white backdrop-blur-sm backdrop-filter lg:absolute">
-      <p className="text-center">© 2025 Sinataav</p>
+    <footer className="absolute bottom-0 w-full p-2 text-white  lg:absolute">
+      <div className="flex items-center justify-center text-center">
+      <div className="flex items-center justify-center z-50">
+        <p className="text-xs ">Designed by </p>
+      
+        <a
+          href="https://zogros.com"
+          className="ml-1"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src="https://zogros.com/images/logos/logo-z-text-light.svg"
+            width="80"
+            alt="zogros logo"
+          />
+        </a>
+     
+      </div>
+      </div>
     </footer>
   );
 }

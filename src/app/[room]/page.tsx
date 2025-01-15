@@ -1,11 +1,15 @@
 "use client";
+export const runtime = 'edge';
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LoadingScreen from "@/components/global/Loading-screen";
 import Room from "@/components/room/Room";
-import imgSource from "@public/images/image2.png";
-import imgSource2 from "@public/images/image1.png";
-import { ImageHotspot1, ImageHotspot2 } from "@/constants";
+import imgSourceCafe from "@public/images/cafe.jpg";
+import imgSourceY2 from "@public/images/y2.jpg";
+import imgSourceStudio1 from "@public/images/studio1.jpg";
+import imgSourceStudio2 from "@public/images/studio2.jpg";
+import imgSourceStudio3 from "@public/images/studio3.jpg";
+import { ImageHotspotCafe, ImageHotspotY2, ImageHotspotStudio1, ImageHotspotStudio2, ImageHotspotStudio3 } from "@/constants";
 import { useParams } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RoomMobile from "@/components/room/RoomMobile";
@@ -17,17 +21,34 @@ export default function Homepage() {
     setIsLoading(false);
   };
   const params = useParams();
-  const [imageSource, setImageSource] = useState(imgSource);
-  const [hotspotData, sethotspotData] = useState(ImageHotspot1);
+  const [imgSource, setImageSource] = useState(imgSourceY2);
+  const [hotspotData, sethotspotData] = useState(ImageHotspotY2);
   useEffect(() => {
-    if (params.room === "1") {
-      setImageSource(imgSource);
-      sethotspotData(ImageHotspot1);
-    } else if (params.room === "2") {
-      setImageSource(imgSource2);
-      sethotspotData(ImageHotspot2);
+    if (params.room === "hq") {
+      setImageSource(imgSourceY2);
+      sethotspotData(ImageHotspotY2);
+    } else if (params.room === "studio1") {
+      setImageSource(imgSourceStudio1);
+      sethotspotData(ImageHotspotStudio1);
     }
-  }, []);
+    else if (params.room === "studio2") {
+      setImageSource(imgSourceStudio2);
+      sethotspotData(ImageHotspotStudio2);
+    }
+    else if (params.room === "studio3") {
+      setImageSource(imgSourceStudio3);
+      sethotspotData(ImageHotspotStudio3);
+    }
+    else if (params.room === "cafe") {
+      setImageSource(imgSourceCafe);
+      sethotspotData(ImageHotspotCafe);
+    }
+    else {
+      setImageSource(imgSourceY2);
+      sethotspotData(ImageHotspotY2);
+    }
+    
+  }, [params.room]);
   return (
     <AnimatePresence mode="wait" onExitComplete={handleLoadingComplete}>
       {isLoading ? (
@@ -53,10 +74,10 @@ export default function Homepage() {
         >
           {isMobile ? (
             <InteractionProvider>
-              <RoomMobile hotspots={hotspotData} imgSource={imageSource} />
+              <RoomMobile hotspots={hotspotData} imgSource={imgSource} />
             </InteractionProvider>
           ) : (
-            <Room hotspots={hotspotData} imgSource={imageSource} />
+            <Room hotspots={hotspotData} imgSource={imgSource} />
           )}
         </motion.div>
       )}

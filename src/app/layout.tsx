@@ -6,8 +6,8 @@ import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
-  title: "3D image Affeliate Website",
-  description: "3D image Affeliate Website made with Next.js",
+  title: "Y2 World",
+  description: "Welcome to the Empire",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

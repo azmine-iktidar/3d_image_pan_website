@@ -41,7 +41,6 @@ export default function LoadingScreen({
         transition={{ delay: 0.2, duration: 0.5 }}
         className="text-4xl font-bold text-gray-800"
       >
-        Loading
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

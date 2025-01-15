@@ -90,7 +90,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
 
   const HotspotDot = () => (
     <motion.span
-      className="relative block h-[11px] w-[11px]"
+      className="relative block h-[12px] w-[12px]"
       onHoverStart={() => !isInteracting && setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
@@ -100,7 +100,7 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
         animate={{
           boxShadow: [
             "0 0 10px 2px rgba(255,255,255,0.3)",
-            "0 0 15px 3px rgba(255,255,255,0.4)",
+            "0 0 20px 5px rgba(255,255,255,0.5)",
             "0 0 10px 2px rgba(255,255,255,0.3)",
           ],
         }}
