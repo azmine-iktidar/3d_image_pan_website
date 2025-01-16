@@ -68,12 +68,6 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
     [isInteracting],
   );
 
-  const HotspotContent = () => (
-    <Link href={url} className="block text-black">
-      {title}
-    </Link>
-  );
-
   // Ping animation variants
   const pingVariants = {
     initial: { scale: 0.5, opacity: 0 },
@@ -188,7 +182,9 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
           sideOffset={15}
           align="center"
         >
-          <HotspotContent />
+          <Link href={url} className="block text-black">
+            {title}
+          </Link>
         </PopoverContent>
       </Popover>
     );
@@ -225,7 +221,9 @@ export default function Hotspot({ x, y, title, url, className }: HotspotProps) {
           className="rounded-full bg-white px-4 py-2 font-bold text-black"
           sideOffset={15}
         >
-          <HotspotContent />
+          <Link href={url} className="block text-black">
+            {title}
+          </Link>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
