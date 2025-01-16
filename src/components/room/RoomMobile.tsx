@@ -24,7 +24,7 @@ export default function RoomMobile({
   const scaledWidth = viewportHeight * imageAspectRatio;
   const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   const maxDragDistance = Math.max(0, scaledWidth - windowWidth);
-  const x = useMotionValue(0);
+  const x = useMotionValue(((scaledWidth - windowWidth) / 2) * -1);
   const isDragging = useRef(false);
 
   useMotionValueEvent(x, "change", () => {
@@ -84,7 +84,7 @@ export default function RoomMobile({
   }, [scaledWidth, x, setIsInteracting]);
 
   const isMobile = useIsMobile();
-
+  console.log(x.get(), scaledWidth);
   return (
     <div className="fixed inset-0 bg-black">
       <section className="h-full w-full">
