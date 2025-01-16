@@ -84,7 +84,7 @@ export default function RoomMobile({
   }, [scaledWidth, x, setIsInteracting]);
 
   const isMobile = useIsMobile();
-  console.log(x.get(), scaledWidth);
+
   return (
     <div className="fixed inset-0 bg-black">
       <section className="h-full w-full">
